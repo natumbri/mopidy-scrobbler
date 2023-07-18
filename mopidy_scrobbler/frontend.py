@@ -1,12 +1,10 @@
-import logging
 import time
 
 import pykka
 import pylast
-
 from mopidy.core import CoreListener
 
-logger = logging.getLogger(__name__)
+from mopidy_scrobbler import logger
 
 API_KEY = "2236babefa8ebb3d93ea467560d00d04"
 API_SECRET = "94d9a09c0cd5be955c4afaeaffcaefcd"
@@ -31,6 +29,7 @@ class ScrobblerFrontend(pykka.ThreadingActor, CoreListener):
         self.last_start_time = None
 
     def on_start(self):
+        # how can we just use the one the ScrobblerBackend sets up?
         try:
             self.lastfm = pylast.LastFMNetwork(
                 api_key=API_KEY,
@@ -39,6 +38,7 @@ class ScrobblerFrontend(pykka.ThreadingActor, CoreListener):
                 password_hash=pylast.md5(self.config["scrobbler"]["password"]),
             )
             logger.info("Scrobbler connected to Last.fm")
+
         except PYLAST_ERRORS as exc:
             logger.error(f"Error during Last.fm setup: {exc}")
             self.stop()

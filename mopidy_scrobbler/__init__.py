@@ -1,10 +1,12 @@
+import logging
 import pathlib
 
 import pkg_resources
-
 from mopidy import config, ext
 
 __version__ = pkg_resources.get_distribution("Mopidy-Scrobbler").version
+
+logger = logging.getLogger(__name__)
 
 
 class Extension(ext.Extension):
@@ -25,3 +27,7 @@ class Extension(ext.Extension):
         from .frontend import ScrobblerFrontend
 
         registry.add("frontend", ScrobblerFrontend)
+
+        from .backend import ScrobblerBackend
+
+        registry.add("backend", ScrobblerBackend)
