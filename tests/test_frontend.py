@@ -2,8 +2,8 @@ from unittest import mock
 
 import pylast
 import pytest
-
 from mopidy import models
+
 from mopidy_scrobbler import frontend as frontend_lib
 
 

@@ -21,6 +21,7 @@ class Extension(ext.Extension):
         schema = super().get_config_schema()
         schema["username"] = config.String()
         schema["password"] = config.Secret()
+        schema["scrobbler_users"] = config.List()
         return schema
 
     def setup(self, registry):
